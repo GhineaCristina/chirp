@@ -47,15 +47,12 @@ class MyProfileView(ProfileBaseView):
         return self.request.user
 
 
-
 class ProfileView(ProfileBaseView):
     def get_slug_field(self):
         return "username"
 
 
 def follow_user(request, username):
-    print(username)
-
     user = get_object_or_404(User, username=username)
     try:
         follow = Follow(followed_user=user, following_user=request.user)
@@ -63,6 +60,4 @@ def follow_user(request, username):
         messages.info(request, "You are now following {0}".format(username))
     except IntegrityError:
         messages.error(request, "You are already following this user")
-
-
     return redirect('profile', username)

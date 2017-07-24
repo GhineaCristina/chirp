@@ -7,10 +7,14 @@
         <span>@{{ object.username }}</span><br>
         <span>{{ object.email }}</span><br>
         {% if request.user != object %}
-            <form method="post" action="{% url 'follow_user' object.username %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary follow">Follow</button>
-            </form>
+            {% if object in following %}
+                <button type="submit" class="btn btn-primary follow">Unfollow</button>
+            {% else %}
+                <form method="post" action="{% url 'follow_user' object.username %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary follow">Follow</button>
+                </form>
+            {% endif %}
         {% endif %}
     </div>
     <div class="col-xs-9">
