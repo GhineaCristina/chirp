@@ -5,7 +5,13 @@
         <span class="glyphicon glyphicon-user profile-icon" aria-hidden="true"></span><br>
         <span>{{ object.first_name }} {{ object.last_name }}</span><br>
         <span>@{{ object.username }}</span><br>
-        <span>{{ object.email }}</span>
+        <span>{{ object.email }}</span><br>
+        {% if request.user != object %}
+            <form method="post" action="{% url 'follow_user' object.username %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary follow">Follow</button>
+            </form>
+        {% endif %}
     </div>
     <div class="col-xs-9">
         <ul class="nav nav-tabs">
